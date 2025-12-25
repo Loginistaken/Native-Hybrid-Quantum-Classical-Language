@@ -442,11 +442,17 @@ time-layered memory, hybrid computation). Existing frameworks require manual orc
 ✅ Summary Table: El‑40 vs Existing Systems
 Feature	El‑40	Qiskit / PennyLane / Q#
 Native DSL for hybrid quantum + classical	✅	❌
+
 Memory phase crystals (time-layered qubit memory)	✅	❌
+
 Photon emission primitive for networking	✅	❌
+
 Vault/ledger for qubit state storage	✅	❌
+
 AI-guided hybrid execution	✅ (planned)	❌
+
 Classical simulation without hardware	✅	✅
+
 Command-based interactive interface	✅	❌
 
 💡 Key ideas
