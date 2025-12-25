@@ -458,3 +458,114 @@ Vault storage + native DSL makes programs auditable and reproducible, unlike any
 Fully simulated prototyping means research and experimentation are possible without access to quantum hardware.
 
 With AI-guided scheduling, El‑40 could automatically optimize complex hybrid operations, something no current framework does natively.
+# ------------------------------
+# ===== Research-Ready Enhancements =====
+# ------------------------------
+
+import math
+import hashlib
+
+# --- Enhanced Qubit with Superposition Amplitudes ---
+class QubitEnhanced:
+    def __init__(self):
+        # Amplitudes for |0> and |1>
+        self.alpha = 1.0  # probability amplitude for |0>
+        self.beta = 0.0   # probability amplitude for |1>
+        self.entangled_with = None
+
+    def entangle(self, other):
+        self.entangled_with = other
+        other.entangled_with = self
+        # Initialize correlated superposition (simplified)
+        theta = random.uniform(0, math.pi/2)
+        self.alpha, self.beta = math.cos(theta), math.sin(theta)
+        other.alpha, other.beta = self.alpha, self.beta
+        print(f"Qubits entangled: alpha={self.alpha:.2f}, beta={self.beta:.2f}")
+
+    def apply_gate(self, gate, target=None):
+        if gate.upper() == "H":
+            # Hadamard: rotate amplitudes (simplified)
+            alpha_new = (self.alpha + self.beta) / math.sqrt(2)
+            beta_new = (self.alpha - self.beta) / math.sqrt(2)
+            self.alpha, self.beta = alpha_new, beta_new
+        elif gate.upper() == "CNOT" and target:
+            # Controlled NOT on amplitudes (simplified probabilistic flip)
+            prob = abs(self.beta)**2
+            if random.random() < prob:
+                target.alpha, target.beta = target.beta, target.alpha
+        print(f"Gate {gate} applied. Alpha={self.alpha:.2f}, Beta={self.beta:.2f}")
+
+    def measure(self):
+        # Collapse qubit to classical 0/1
+        prob0 = abs(self.alpha)**2
+        result = 0 if random.random() < prob0 else 1
+        return result
+
+    def quantum_coherent(self):
+        # Coherence decreases slightly with time or operations
+        return random.random() < 0.85
+
+# --- Multi-Phase Memory ---
+class MemoryPhaseEnhanced:
+    def __init__(self):
+        self.buffer = []
+
+    def store(self, qubits, duration, phase_id=None):
+        timestamp = time.time()
+        snapshot = [q.measure() for q in qubits]  # store collapsed states
+        self.buffer.append({
+            "timestamp": timestamp,
+            "duration": duration,
+            "phase_id": phase_id,
+            "data": snapshot
+        })
+        print(f"MemoryPhase stored: phase_id={phase_id}, data={snapshot}, duration={duration}")
+
+    def release(self, phase_id=None):
+        now = time.time()
+        released = []
+        for idx, entry in enumerate(self.buffer):
+            if (phase_id is None or entry["phase_id"] == phase_id) and now - entry["timestamp"] >= entry["duration"]:
+                print(f"MemoryPhase Released: phase_id={entry['phase_id']}, data={entry['data']}")
+                released.append(idx)
+        # Remove released entries
+        for idx in reversed(released):
+            self.buffer.pop(idx)
+
+# --- Vault Storage with Hashing and Timestamp ---
+class VaultEnhanced:
+    def __init__(self):
+        self.store_data = {}
+
+    def store(self, name, qubits):
+        snapshot = [q.measure() for q in qubits]
+        timestamp = time.time()
+        data_str = ",".join(map(str, snapshot)) + str(timestamp)
+        hash_digest = hashlib.sha256(data_str.encode()).hexdigest()
+        self.store_data[name] = {
+            "snapshot": snapshot,
+            "timestamp": timestamp,
+            "hash": hash_digest
+        }
+        print(f"Vault stored '{name}': {snapshot}, hash={hash_digest[:8]}...")
+
+# --- Photon Emission with Node Simulation ---
+class QuantumNode:
+    def __init__(self, name):
+        self.name = name
+        self.received = []
+
+    def receive_photon(self, qubit_state, sender="UNKNOWN"):
+        self.received.append((time.time(), qubit_state, sender))
+        print(f"[Node {self.name}] Photon received from {sender}: state={qubit_state}")
+
+def photon_emit_enhanced(qubit, label, node=None):
+    state = qubit.measure()
+    print(f"Photon emitted for '{label}': state={state}")
+    if node:
+        node.receive_photon(state, sender=label)
+
+# --- Enhanced Logger ---
+def classical_log_enhanced(*args):
+    timestamp = time.strftime("%H:%M:%S", time.localtime())
+    print(f"[{timestamp}] ", *args)
